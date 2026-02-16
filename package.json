@@ -1,0 +1,141 @@
+{
+  "name": "npm-smart-upgrade",
+  "displayName": "NPM SmartUpgrade",
+  "description": "Monitor npm package versions, detect updates, and analyze breaking changes.",
+  "version": "0.1.0",
+  "publisher": "local",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "icon": "assets/icon.svg",
+  "activationEvents": [
+    "onStartupFinished",
+    "onView:npmVersionGuardianView",
+    "onCommand:npmVersionGuardian.refreshVersions",
+    "onCommand:npmVersionGuardian.updatePackage",
+    "onCommand:npmVersionGuardian.updateWithResolve",
+    "onCommand:npmVersionGuardian.showCopilotCliHelp",
+    "onCommand:npmVersionGuardian.showCopilotDetails",
+    "onCommand:npmVersionGuardian.analyzePackage",
+    "onCommand:npmVersionGuardian.loginWithGitHub",
+    "workspaceContains:**/package.json"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "npmVersionGuardian",
+          "title": "NPM SmartUpgrade",
+          "icon": "assets/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "npmVersionGuardian": [
+        {
+          "id": "npmVersionGuardianView",
+          "name": "NPM Version Guardian"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "npmVersionGuardian.refreshVersions",
+        "title": "NPM Guardian: Refresh Versions"
+      },
+      {
+        "command": "npmVersionGuardian.updatePackage",
+        "title": "NPM Guardian: Update Package"
+      },
+      {
+        "command": "npmVersionGuardian.updateWithResolve",
+        "title": "NPM Guardian: Update & Resolve Breaking Changes"
+      },
+      {
+        "command": "npmVersionGuardian.loginWithGitHub",
+        "title": "NPM Guardian: Login with GitHub (+Copilot)"
+      },
+      {
+        "command": "npmVersionGuardian.showCopilotCliHelp",
+        "title": "NPM Guardian: Copilot CLI Requirements"
+      },
+      {
+        "command": "npmVersionGuardian.showCopilotDetails",
+        "title": "NPM Guardian: Show Copilot Details"
+      },
+      {
+        "command": "npmVersionGuardian.analyzePackage",
+        "title": "NPM Guardian: Analyze Breaking Changes"
+      }
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "npmVersionGuardian.updatePackage",
+          "when": "view == npmVersionGuardianView && viewItem == npmGuardianPackage",
+          "group": "inline"
+        },
+        {
+          "command": "npmVersionGuardian.updateWithResolve",
+          "when": "view == npmVersionGuardianView && viewItem == npmGuardianPackageBreaking",
+          "group": "inline"
+        },
+        {
+          "command": "npmVersionGuardian.analyzePackage",
+          "when": "view == npmVersionGuardianView && viewItem =~ /^npmGuardianPackage/",
+          "group": "inline"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "NPM Version Guardian",
+      "properties": {
+        "npmVersionGuardian.scanInterval": {
+          "type": "number",
+          "default": 30,
+          "description": "Interval in minutes between scans"
+        },
+        "npmVersionGuardian.includeDevDependencies": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include devDependencies in scan"
+        },
+        "npmVersionGuardian.analyzeMinorBreakingChanges": {
+          "type": "boolean",
+          "default": false,
+          "description": "Analyze minor updates for breaking changes"
+        },
+        "npmVersionGuardian.autoUpdatePatch": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically update patch versions"
+        },
+        "npmVersionGuardian.enableCopilot": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable Copilot breaking change analysis (requires GitHub login)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "vscode:prepublish": "npm run compile"
+  },
+  "dependencies": {
+    "@github/copilot-sdk": "^0.1.22",
+    "npm-check-updates": "^16.14.20",
+    "semver": "^7.6.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@types/semver": "^7.5.8",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.3"
+  }
+}

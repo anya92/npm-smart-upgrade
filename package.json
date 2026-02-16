@@ -13,14 +13,14 @@
   "icon": "assets/icon.svg",
   "activationEvents": [
     "onStartupFinished",
-    "onView:npmVersionGuardianView",
-    "onCommand:npmVersionGuardian.refreshVersions",
-    "onCommand:npmVersionGuardian.updatePackage",
-    "onCommand:npmVersionGuardian.updateWithResolve",
-    "onCommand:npmVersionGuardian.showCopilotCliHelp",
-    "onCommand:npmVersionGuardian.showCopilotDetails",
-    "onCommand:npmVersionGuardian.analyzePackage",
-    "onCommand:npmVersionGuardian.loginWithGitHub",
+    "onView:npmSmartUpgradeView",
+    "onCommand:npmSmartUpgrade.refreshVersions",
+    "onCommand:npmSmartUpgrade.updatePackage",
+    "onCommand:npmSmartUpgrade.updateWithResolve",
+    "onCommand:npmSmartUpgrade.showCopilotCliHelp",
+    "onCommand:npmSmartUpgrade.showCopilotDetails",
+    "onCommand:npmSmartUpgrade.analyzePackage",
+    "onCommand:npmSmartUpgrade.loginWithGitHub",
     "workspaceContains:**/package.json"
   ],
   "main": "./out/extension.js",
@@ -28,65 +28,65 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "npmVersionGuardian",
+          "id": "npmSmartUpgrade",
           "title": "NPM Smart Upgrade",
           "icon": "assets/icon.svg"
         }
       ]
     },
     "views": {
-      "npmVersionGuardian": [
+      "npmSmartUpgrade": [
         {
-          "id": "npmVersionGuardianView",
+          "id": "npmSmartUpgradeView",
           "name": "NPM Smart Upgrade"
         }
       ]
     },
     "commands": [
       {
-        "command": "npmVersionGuardian.refreshVersions",
+        "command": "npmSmartUpgrade.refreshVersions",
         "title": "Refresh Versions"
       },
       {
-        "command": "npmVersionGuardian.updatePackage",
+        "command": "npmSmartUpgrade.updatePackage",
         "title": "Update Package"
       },
       {
-        "command": "npmVersionGuardian.updateWithResolve",
+        "command": "npmSmartUpgrade.updateWithResolve",
         "title": "Update & Resolve Breaking Changes"
       },
       {
-        "command": "npmVersionGuardian.loginWithGitHub",
+        "command": "npmSmartUpgrade.loginWithGitHub",
         "title": "Login with GitHub (+Copilot)"
       },
       {
-        "command": "npmVersionGuardian.showCopilotCliHelp",
+        "command": "npmSmartUpgrade.showCopilotCliHelp",
         "title": "Copilot CLI Requirements"
       },
       {
-        "command": "npmVersionGuardian.showCopilotDetails",
+        "command": "npmSmartUpgrade.showCopilotDetails",
         "title": "Show Copilot Details"
       },
       {
-        "command": "npmVersionGuardian.analyzePackage",
+        "command": "npmSmartUpgrade.analyzePackage",
         "title": "Analyze Breaking Changes"
       }
     ],
     "menus": {
       "view/item/context": [
         {
-          "command": "npmVersionGuardian.updatePackage",
-          "when": "view == npmVersionGuardianView && viewItem == npmGuardianPackage",
+          "command": "npmSmartUpgrade.updatePackage",
+          "when": "view == npmSmartUpgradeView && viewItem == npmGuardianPackage",
           "group": "inline"
         },
         {
-          "command": "npmVersionGuardian.updateWithResolve",
-          "when": "view == npmVersionGuardianView && viewItem == npmGuardianPackageBreaking",
+          "command": "npmSmartUpgrade.updateWithResolve",
+          "when": "view == npmSmartUpgradeView && viewItem == npmGuardianPackageBreaking",
           "group": "inline"
         },
         {
-          "command": "npmVersionGuardian.analyzePackage",
-          "when": "view == npmVersionGuardianView && viewItem =~ /^npmGuardianPackage/",
+          "command": "npmSmartUpgrade.analyzePackage",
+          "when": "view == npmSmartUpgradeView && viewItem =~ /^npmGuardianPackage/",
           "group": "inline"
         }
       ]
@@ -94,27 +94,22 @@
     "configuration": {
       "title": "NPM Smart Upgrade",
       "properties": {
-        "npmVersionGuardian.scanInterval": {
+        "npmSmartUpgrade.scanInterval": {
           "type": "number",
           "default": 30,
           "description": "Interval in minutes between scans"
         },
-        "npmVersionGuardian.includeDevDependencies": {
+        "npmSmartUpgrade.includeDevDependencies": {
           "type": "boolean",
           "default": true,
           "description": "Include devDependencies in scan"
         },
-        "npmVersionGuardian.analyzeMinorBreakingChanges": {
-          "type": "boolean",
-          "default": false,
-          "description": "Analyze minor updates for breaking changes"
-        },
-        "npmVersionGuardian.autoUpdatePatch": {
+        "npmSmartUpgrade.autoUpdatePatch": {
           "type": "boolean",
           "default": false,
           "description": "Automatically update patch versions"
         },
-        "npmVersionGuardian.enableCopilot": {
+        "npmSmartUpgrade.enableCopilot": {
           "type": "boolean",
           "default": false,
           "description": "Enable Copilot breaking change analysis (requires GitHub login)"

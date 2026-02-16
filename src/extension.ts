@@ -10,7 +10,7 @@ import { checkCopilotCli } from "./services/copilotCliChecker";
 
 export function activate(context: vscode.ExtensionContext): void {
   const provider = new PackageTreeProvider();
-  const treeView = vscode.window.createTreeView("npmVersionGuardianView", {
+  const treeView = vscode.window.createTreeView("npmSmartUpgradeView", {
     treeDataProvider: provider
   });
   const auth = new GithubAuthManager();
@@ -19,26 +19,26 @@ export function activate(context: vscode.ExtensionContext): void {
   const controller = new GuardianController(context, provider, treeView, analyzer, auth);
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("npmVersionGuardian.refreshVersions", () =>
+    vscode.commands.registerCommand("npmSmartUpgrade.refreshVersions", () =>
       controller.refreshAll(true)
     ),
-    vscode.commands.registerCommand("npmVersionGuardian.updatePackage", (node: PackageNode) =>
+    vscode.commands.registerCommand("npmSmartUpgrade.updatePackage", (node: PackageNode) =>
       controller.updatePackage(node)
     ),
-    vscode.commands.registerCommand("npmVersionGuardian.updateWithResolve", (node: PackageNode) =>
+    vscode.commands.registerCommand("npmSmartUpgrade.updateWithResolve", (node: PackageNode) =>
       controller.updateWithResolve(node)
     ),
-    vscode.commands.registerCommand("npmVersionGuardian.loginWithGitHub", () =>
+    vscode.commands.registerCommand("npmSmartUpgrade.loginWithGitHub", () =>
       controller.loginWithGitHub()
     ),
-    vscode.commands.registerCommand("npmVersionGuardian.showCopilotCliHelp", () =>
+    vscode.commands.registerCommand("npmSmartUpgrade.showCopilotCliHelp", () =>
       controller.showCopilotCliHelp()
     ),
-    vscode.commands.registerCommand("npmVersionGuardian.showCopilotDetails", (pkg: PackageInfo) =>
+    vscode.commands.registerCommand("npmSmartUpgrade.showCopilotDetails", (pkg: PackageInfo) =>
       controller.showCopilotDetails(pkg)
     ),
     vscode.commands.registerCommand(
-      "npmVersionGuardian.analyzePackage",
+      "npmSmartUpgrade.analyzePackage",
       (node: PackageNode | PackageInfo) => controller.analyzePackage(node)
     )
   );
@@ -86,7 +86,6 @@ class GuardianController {
     }
 
     const includeDev = getConfigBoolean("includeDevDependencies", true);
-    const analyzeMinor = getConfigBoolean("analyzeMinorBreakingChanges", false);
     const autoUpdatePatch = getConfigBoolean("autoUpdatePatch", false);
     this.copilotEnabled = getConfigBoolean("enableCopilot", false);
     this.hasGithubSession = await this.auth.refreshSession(false);
@@ -113,14 +112,10 @@ class GuardianController {
       const cliStatus = await checkCopilotCli();
       this.provider.setCopilotCliStatus(cliStatus);
       if (!cliStatus.supported) {
-        this.markAnalysisError(
-          results,
-          analyzeMinor,
-          cliStatus.error ?? "Copilot CLI not compatible"
-        );
+        this.markAnalysisError(results, cliStatus.error ?? "Copilot CLI not compatible");
       }
     } else if (this.copilotEnabled && !this.hasGithubSession) {
-      this.markAnalysisError(results, analyzeMinor, "GitHub OAuth session missing");
+        this.markAnalysisError(results, "GitHub OAuth session missing");
     }
   }
 
@@ -186,7 +181,7 @@ class GuardianController {
       return;
     }
     await vscode.workspace
-      .getConfiguration("npmVersionGuardian")
+      .getConfiguration("npmSmartUpgrade")
       .update("enableCopilot", true, vscode.ConfigurationTarget.Global);
     this.copilotEnabled = true;
     this.hasGithubSession = true;
@@ -304,14 +299,12 @@ class GuardianController {
     }
   }
 
-  private markAnalysisError(results: ScanResult[], analyzeMinor: boolean, message: string): void {
+  private markAnalysisError(results: ScanResult[], message: string): void {
     for (const result of results) {
       for (const pkg of result.packages) {
-        if (pkg.updateType === "major" || (analyzeMinor && pkg.updateType === "minor")) {
-          pkg.analysisStatus = "error";
-          pkg.analysisError = message;
-          this.updateDetailsPanel(pkg);
-        }
+        pkg.analysisStatus = "error";
+        pkg.analysisError = message;
+        this.updateDetailsPanel(pkg);
       }
     }
     this.provider.refresh();
@@ -449,11 +442,11 @@ class GithubAuthManager {
 }
 
 function getConfigNumber(key: string, fallback: number): number {
-  const value = vscode.workspace.getConfiguration("npmVersionGuardian").get<number>(key);
+  const value = vscode.workspace.getConfiguration("npmSmartUpgrade").get<number>(key);
   return typeof value === "number" ? value : fallback;
 }
 
 function getConfigBoolean(key: string, fallback: boolean): boolean {
-  const value = vscode.workspace.getConfiguration("npmVersionGuardian").get<boolean>(key);
+  const value = vscode.workspace.getConfiguration("npmSmartUpgrade").get<boolean>(key);
   return typeof value === "boolean" ? value : fallback;
 }

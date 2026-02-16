@@ -147,7 +147,7 @@ export class PackageNode extends TreeNode {
     item.contextValue = pkg.hasBreakingChanges ? "npmGuardianPackageBreaking" : "npmGuardianPackage";
     item.tooltip = createTooltip(pkg, copilotEnabled, hasSession);
     item.command = {
-      command: "npmVersionGuardian.showCopilotDetails",
+      command: "npmSmartUpgrade.showCopilotDetails",
       title: "Show Copilot Details",
       arguments: [pkg]
     };
@@ -174,7 +174,7 @@ class LoginNode extends TreeNode {
   constructor(label: string) {
     const item = new vscode.TreeItem(label, vscode.TreeItemCollapsibleState.None);
     item.command = {
-      command: "npmVersionGuardian.loginWithGitHub",
+      command: "npmSmartUpgrade.loginWithGitHub",
       title: "Login with GitHub (+Copilot)"
     };
     super(item);
@@ -197,7 +197,7 @@ class CliBannerNode extends TreeNode {
     tooltip.appendMarkdown("- `npm i -g @github/copilot`\n");
     item.tooltip = tooltip;
     item.command = {
-      command: "npmVersionGuardian.showCopilotCliHelp",
+      command: "npmSmartUpgrade.showCopilotCliHelp",
       title: "Copilot CLI Requirements"
     };
     super(item);

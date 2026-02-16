@@ -45,31 +45,31 @@
     "commands": [
       {
         "command": "npmVersionGuardian.refreshVersions",
-        "title": "NPM Smart Upgrade: Refresh Versions"
+        "title": "Refresh Versions"
       },
       {
         "command": "npmVersionGuardian.updatePackage",
-        "title": "NPM Smart Upgrade: Update Package"
+        "title": "Update Package"
       },
       {
         "command": "npmVersionGuardian.updateWithResolve",
-        "title": "NPM Smart Upgrade: Update & Resolve Breaking Changes"
+        "title": "Update & Resolve Breaking Changes"
       },
       {
         "command": "npmVersionGuardian.loginWithGitHub",
-        "title": "NPM Smart Upgrade: Login with GitHub (+Copilot)"
+        "title": "Login with GitHub (+Copilot)"
       },
       {
         "command": "npmVersionGuardian.showCopilotCliHelp",
-        "title": "NPM Smart Upgrade: Copilot CLI Requirements"
+        "title": "Copilot CLI Requirements"
       },
       {
         "command": "npmVersionGuardian.showCopilotDetails",
-        "title": "NPM Smart Upgrade: Show Copilot Details"
+        "title": "Show Copilot Details"
       },
       {
         "command": "npmVersionGuardian.analyzePackage",
-        "title": "NPM Smart Upgrade: Analyze Breaking Changes"
+        "title": "Analyze Breaking Changes"
       }
     ],
     "menus": {

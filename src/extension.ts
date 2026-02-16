@@ -256,29 +256,6 @@ class GuardianController {
     }
   }
 
-  private async analyzeBreakingChanges(results: ScanResult[], analyzeMinor: boolean): Promise<void> {
-    const targets: PackageInfo[] = [];
-
-    for (const result of results) {
-      for (const pkg of result.packages) {
-        if (pkg.updateType === "major" || (analyzeMinor && pkg.updateType === "minor")) {
-          targets.push(pkg);
-        }
-      }
-    }
-
-    if (targets.length === 0) return;
-
-    const status = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
-    status.text = "$(sync~spin) Analyzing breaking changes...";
-    status.show();
-
-    for (const pkg of targets) {
-      await this.analyzeSinglePackage(pkg, status);
-    }
-
-    status.dispose();
-  }
 
   private async analyzeSinglePackage(
     pkg: PackageInfo,

@@ -1,6 +1,6 @@
 {
   "name": "npm-smart-upgrade",
-  "displayName": "NPM SmartUpgrade",
+  "displayName": "NPM Smart Upgrade",
   "description": "Monitor npm package versions, detect updates, and analyze breaking changes.",
   "version": "0.1.0",
   "publisher": "local",
@@ -29,7 +29,7 @@
       "activitybar": [
         {
           "id": "npmVersionGuardian",
-          "title": "NPM SmartUpgrade",
+          "title": "NPM Smart Upgrade",
           "icon": "assets/icon.svg"
         }
       ]
@@ -38,38 +38,38 @@
       "npmVersionGuardian": [
         {
           "id": "npmVersionGuardianView",
-          "name": "NPM Version Guardian"
+          "name": "NPM Smart Upgrade"
         }
       ]
     },
     "commands": [
       {
         "command": "npmVersionGuardian.refreshVersions",
-        "title": "NPM Guardian: Refresh Versions"
+        "title": "NPM Smart Upgrade: Refresh Versions"
       },
       {
         "command": "npmVersionGuardian.updatePackage",
-        "title": "NPM Guardian: Update Package"
+        "title": "NPM Smart Upgrade: Update Package"
       },
       {
         "command": "npmVersionGuardian.updateWithResolve",
-        "title": "NPM Guardian: Update & Resolve Breaking Changes"
+        "title": "NPM Smart Upgrade: Update & Resolve Breaking Changes"
       },
       {
         "command": "npmVersionGuardian.loginWithGitHub",
-        "title": "NPM Guardian: Login with GitHub (+Copilot)"
+        "title": "NPM Smart Upgrade: Login with GitHub (+Copilot)"
       },
       {
         "command": "npmVersionGuardian.showCopilotCliHelp",
-        "title": "NPM Guardian: Copilot CLI Requirements"
+        "title": "NPM Smart Upgrade: Copilot CLI Requirements"
       },
       {
         "command": "npmVersionGuardian.showCopilotDetails",
-        "title": "NPM Guardian: Show Copilot Details"
+        "title": "NPM Smart Upgrade: Show Copilot Details"
       },
       {
         "command": "npmVersionGuardian.analyzePackage",
-        "title": "NPM Guardian: Analyze Breaking Changes"
+        "title": "NPM Smart Upgrade: Analyze Breaking Changes"
       }
     ],
     "menus": {
@@ -92,7 +92,7 @@
       ]
     },
     "configuration": {
-      "title": "NPM Version Guardian",
+      "title": "NPM Smart Upgrade",
       "properties": {
         "npmVersionGuardian.scanInterval": {
           "type": "number",

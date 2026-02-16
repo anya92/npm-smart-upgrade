@@ -7,7 +7,7 @@ export function getTerminalForRoot(rootPath: string): vscode.Terminal {
   if (existing) return existing;
 
   const terminal = vscode.window.createTerminal({
-    name: `NPM Guardian (${rootPath})`,
+    name: `NPM Smart Upgrade (${rootPath})`,
     cwd: rootPath
   });
   terminals.set(rootPath, terminal);
